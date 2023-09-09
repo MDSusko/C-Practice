@@ -1,2 +1,4 @@
 README 
-This is a simple C++ program that asks the user for auto loan information and can then output the results to the users screen. 
+This is a C++  repositiory that has programs
+that I have coded to practice skills learned 
+in my college courses. 
