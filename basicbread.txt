@@ -1,0 +1,9 @@
+Basic Bread Recipe
+Cameron Fiorenza
+
+Flour 500
+Yeast 10
+Sugar 30
+Salt 9
+Oil 15
+Water 310
