@@ -18,7 +18,11 @@ int main (){
     std::ifstream file;
     std::string recipeName;
     std::string chefName;
-    //FIXME add more variables for conversion 
+    std::string dirLine;
+    int i;
+    char convert;
+    double convAmt;
+    bool conCond = false;
 
     //Open File 
     file.open("basicbread.txt");
@@ -31,28 +35,107 @@ int main (){
         return 1; //Exit with error code.
     }
     
-    //Get Recipe Name and Chef Name 
-    getline(file, recipeName);
-    std::cout << recipeName << std::endl;
-    std::cout << "---------------------------------" << std::endl;
-    getline(file, chefName);
-    std::cout << "By: " << chefName << std::endl;
-    std::cout << std::endl; 
+    //Ask if user wants to convert or not
+    std::cout << "Would you like to convert the recipe? (Y/N)";
+    std::cin >> convert;
 
-    //Format all ingredients in file
-   
-    //Loop to read all ingredients 
-    while (!file.eof()) {
-        file >> ingredientName;
-        file >> ingredientAmount;
+    //Branch to convert
 
-        if (!file.fail()) {
-        //Get ingredients and format 
-        std::cout << ingredientName << "-" << ingredientAmount << "g" << std::endl;
+    if (convert == 'Y' || convert == 'y') {
+        conCond = true;
+        std::cout << "Enter the amount to convert, to half type in .5, to quarter type in .25, to double type 2.0, etc: ";
+        std::cin >> convAmt;
+        std::cout << std::endl;
+        std::cout << std::endl;
+        std::cout << std::endl;
+        std::cout << "Here is the converted recipe!" << std::endl;
+        std::cout << std::endl;
+        std::cout << std::endl;
+        std::cout << std::endl;
+
+        //Get Recipe Name
+        getline(file, recipeName);
+        std::cout << recipeName << std::endl;
+        std::cout << "---------------------------------" << std::endl;
+
+        //Get Chef Name
+        getline(file, chefName);
+        std::cout << std::endl; 
+        std::cout << "By: " << chefName << std::endl;
+        std::cout << std::endl; 
+
+        //Get Ingredients
+        std::cout << "Ingredients: " << std::endl;
+        std::cout << "---------------------------------" << std::endl;
+
+        //Read ingredients
+        while (file >> ingredientName >> ingredientAmount) {
+            if (!file.fail()) {
+                std::cout << ingredientName << "-" << (ingredientAmount * convAmt) << "g" << std::endl;
+            }
+        }        
+    
+        file.clear();  //FIXME Need a workaround to read first line without "Directions:" in .txt file 
+
+        //Directions
+        std::cout << "---------------------------------" << std::endl;
+        std::cout << "Directions: " << std::endl;
+        std::cout << std::endl;
+
+        i = 1;
+        //Read Directions
+        while (getline(file,dirLine)) {
+            std::cout << i << "." << " " << dirLine << std::endl;
+            i++;
         }
+
+        std::cout << "---------------------------------" << std::endl;
+
+    }
+
+    //Branch to keep original recipe
+    else {
+
+        //Get Recipe Name
+        getline(file, recipeName);
+        std::cout << recipeName << std::endl;
+        std::cout << "---------------------------------" << std::endl;
+
+        //Get Chef Name
+        getline(file, chefName);
+        std::cout << std::endl; 
+        std::cout << "By: " << chefName << std::endl;
+        std::cout << std::endl; 
+
+        //Get Ingredients
+        std::cout << "Ingredients: " << std::endl;
+        std::cout << "---------------------------------" << std::endl;
+
+        //Read ingredients
+        while (file >> ingredientName >> ingredientAmount) {
+            if (!file.fail()) {
+                std::cout << ingredientName << "-" << ingredientAmount << "g" << std::endl;
+            }
+        }        
+    
+        file.clear(); //FIXME Need a workaround to read first line without "Directions:" in .txt file 
+
+        //Directions
+        std::cout << "---------------------------------" << std::endl;
+        std::cout << "Directions: " << std::endl;
+        std::cout << std::endl;
+
+        i = 1;
+        //Read Directions
+        while (getline(file,dirLine)) {
+            std::cout << i << "." << " " << dirLine << std::endl;
+            i++;
+        }
+
+        std::cout << "---------------------------------" << std::endl;
     }
     
     file.close();
-    
+
     return 0;
 }
