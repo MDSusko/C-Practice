@@ -40,21 +40,18 @@ int main (){
     std::cout << std::endl; 
 
     //Format all ingredients in file
-    while (file >> ingredientName >> ingredientAmount) {
-        //Loop to read all ingredients 
-        while (!file.eof()) {
-            file >> ingredientName;
-            file >> ingredientAmount;
+   
+    //Loop to read all ingredients 
+    while (!file.eof()) {
+        file >> ingredientName;
+        file >> ingredientAmount;
 
-            //FIXME Program not pulling first ingredient 
-
-            if (!file.fail()) {
-                //Get ingredients and format 
-                std::cout << ingredientName << "-" << ingredientAmount << "g" << std::endl;
-            }
+        if (!file.fail()) {
+        //Get ingredients and format 
+        std::cout << ingredientName << "-" << ingredientAmount << "g" << std::endl;
         }
     }
-
+    
     file.close();
     
     return 0;
