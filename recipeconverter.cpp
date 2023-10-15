@@ -15,17 +15,22 @@ int main (){
     std::string ingredientLookup;
     std::string ingredientName;
     int ingredientAmount;
+    double ingcovAmt;
     std::ifstream file;
+    std::string fileName;
     std::string recipeName;
     std::string chefName;
     std::string dirLine;
     int i;
     char convert;
+    char userOut;
     double convAmt;
     bool conCond = false;
 
-    //Open File 
-    file.open("basicbread.txt");
+    //Open File based on user input
+    std::cout << "Enter file name: " << std::endl;
+    std::cin >> fileName;
+    file.open(fileName);
 
     bool found = false;         //Check if file opened correctly 
 
@@ -71,7 +76,8 @@ int main (){
         //Read ingredients
         while (file >> ingredientName >> ingredientAmount) {
             if (!file.fail()) {
-                std::cout << ingredientName << "-" << (ingredientAmount * convAmt) << "g" << std::endl;
+                ingcovAmt = ingredientAmount * convAmt;
+                std::cout << ingredientName << "-" << ingcovAmt << "g" << std::endl;
             }
         }        
     
@@ -133,6 +139,53 @@ int main (){
         }
 
         std::cout << "---------------------------------" << std::endl;
+    }
+
+    file.close();
+
+    //Take formatted data and output to .txt file
+    std::cout << std::endl;
+    std::cout << "Would you like to output data to .txt? (Y/N) " << std::endl;
+    std::cin >> userOut;
+
+    if (userOut == 'y' or userOut == 'Y') {
+        
+        //Declare Output file variables
+        std::ofstream outFile;
+        std::string outfileName;
+        std::cout << "Enter output file name: " << std::endl;
+        std::cin >> outfileName;
+
+        //Open File and Check if it opened
+        outFile.open(outfileName);
+        if (!outFile.is_open()) {
+            std::cout << outfileName << " could not open, program terminated." << std::endl;
+            return 1;
+        }
+
+        //Write to output file
+        outFile << recipeName << std::endl;
+        outFile << "---------------------------------" << std::endl;
+        outFile << std::endl; 
+        outFile << "By: " << chefName << std::endl;
+        outFile << std::endl; 
+        outFile << "Ingredients: " << std::endl;
+        outFile << "---------------------------------" << std::endl;
+        
+        //Re-Read Ingredient list and output to .txt
+        file.open(fileName);
+        file.clear();
+
+        //FIXME still need to figure this out, got it reading the file again, but from the top. Use getline() maybe? 
+        if (file.is_open()) {
+            std::cout << "INPUT FILE OPEN" << std::endl;
+            file >> ingredientName >> ingredientAmount;
+            std::cout << ingredientName << "-" << ingredientAmount << "g" << std::endl;
+        }
+
+        //Close output file
+        outFile.close();
+
     }
     
     file.close();
